@@ -9,7 +9,7 @@ import tech.powerjob.worker.core.processor.sdk.BroadcastProcessor;
 import java.util.List;
 
 /**
- * 测试用的广播执行处理器
+ * Broadcast execution processor for testing
  *
  * @author tjq
  * @since 2020/3/25

@@ -4,7 +4,7 @@ import tech.powerjob.worker.extension.processor.ProcessorBean;
 import tech.powerjob.worker.extension.processor.ProcessorDefinition;
 
 /**
- * 内部使用的 Processor 加载器
+ * Processor loader used internally
  *
  * @author Echo009
  * @since 2023/1/20

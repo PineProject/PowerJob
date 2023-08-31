@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
 import java.util.Optional;
 
 /**
- * 代理用的 actor
+ * Proxy actor
  *
  * @author tjq
  * @since 2023/1/6

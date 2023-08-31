@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 创建/修改 Workflow 请求
+ * Create/modify Workflow request
  *
  * @author tjq
  * @since 2020/5/26
@@ -22,32 +22,32 @@ public class SaveWorkflowRequest implements Serializable {
     private Long id;
 
     /**
-     * 工作流名称
+     * Workflow name
      */
     private String wfName;
     /**
-     * 工作流描述
+     * Workflow description
      */
     private String wfDescription;
 
     /**
-     * 所属应用ID（OpenClient不需要用户填写，自动填充）
+     * The application ID to which it belongs (OpenClient does not need to be filled in by the user, it will be filled in automatically)
      */
     private Long appId;
 
 
-    /* ************************** 定时参数 ************************** */
+    /* ************************* Timing parameters ********************* ***** */
     /**
-     * 时间表达式类型，仅支持 CRON 和 API
+     * Time expression type, only supports CRON and API
      */
     private TimeExpressionType timeExpressionType;
     /**
-     * 时间表达式，CRON/NULL/LONG/LONG
+     * time expression, CRON/NULL/LONG/LONG
      */
     private String timeExpression;
 
     /**
-     * 最大同时运行的工作流个数，默认 1
+     * The maximum number of workflows running at the same time, the default is 1
      */
     private Integer maxWfInstanceNum = 1;
 
@@ -57,11 +57,11 @@ public class SaveWorkflowRequest implements Serializable {
     private boolean enable = true;
 
     /**
-     * 工作流整体失败的报警
+     * An alarm for the overall failure of the workflow
      */
-    private List<Long> notifyUserIds = Lists.newLinkedList();
+    private List<Long> notifyUserIds = Lists. newLinkedList();
 
-    /** 点线表示法*/
+    /** dotted notation */
     private PEWorkflowDAG dag;
 
     private LifeCycle lifeCycle;

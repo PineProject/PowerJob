@@ -7,8 +7,8 @@ import tech.powerjob.common.utils.CommonUtils;
 
 
 /**
- * 保存工作流节点信息请求
- * 工作流节点的
+ * Save workflow node information request
+ * Workflow node's
  *
  * @author zenggonggu
  * @since 2021/02/02
@@ -20,27 +20,27 @@ public class SaveWorkflowNodeRequest {
 
     private Long appId;
     /**
-     * 节点类型(默认为任务节点)
+     * Node type (default is task node)
      */
     private Integer type;
     /**
-     * 任务 ID
+     * Task ID
      */
     private Long jobId;
     /**
-     * 节点别名，默认为对应的任务名称
+     * Node alias, the default is the corresponding task name
      */
     private String nodeName;
     /**
-     * 节点参数
+     * Node parameters
      */
     private String nodeParams;
     /**
-     * 是否启用，默认启用
+     * Whether to enable or not, it is enabled by default
      */
     private Boolean enable = true;
     /**
-     * 是否允许失败跳过，默认不允许
+     * Whether to allow failure to skip, the default is not allowed
      */
     private Boolean skipWhenFailed = false;
 

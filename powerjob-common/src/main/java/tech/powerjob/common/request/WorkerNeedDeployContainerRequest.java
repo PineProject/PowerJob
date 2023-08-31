@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Worker需要部署容器，主动向Server请求信息
+ * Worker needs to deploy containers and actively request information from Server
  *
  * @author tjq
  * @since 2020/5/16

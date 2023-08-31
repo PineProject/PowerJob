@@ -7,7 +7,7 @@ import tech.powerjob.common.model.LogConfig;
 import java.util.Date;
 
 /**
- * jobInfo 对外输出对象
+ * jobInfo external output object
  *
  * @author tjq
  * @since 2020/5/14
@@ -17,101 +17,101 @@ public class JobInfoDTO {
 
     private Long id;
 
-    /* ************************** 任务基本信息 ************************** */
+    /* ************************* Basic information of the task******************** ***** */
     /**
-     * 任务名称
+     * mission name
      */
     private String jobName;
     /**
-     * 任务描述
+     * mission details
      */
     private String jobDescription;
     /**
-     * 任务所属的应用ID
+     * Application ID to which the task belongs
      */
     private Long appId;
     /**
-     * 任务自带的参数
+     * Parameters that come with the task
      */
     private String jobParams;
 
-    /* ************************** 定时参数 ************************** */
+    /* ************************* Timing parameters ********************* ***** */
     /**
-     * 时间表达式类型（CRON/API/FIX_RATE/FIX_DELAY）
+     * Time expression type (CRON/API/FIX_RATE/FIX_DELAY)
      */
     private Integer timeExpressionType;
     /**
-     * 时间表达式，CRON/NULL/LONG/LONG
+     * time expression, CRON/NULL/LONG/LONG
      */
     private String timeExpression;
 
-    /* ************************** 执行方式 ************************** */
+    /* ************************** Implementation modalities******************** ***** */
     /**
-     * 执行类型，单机/广播/MR
+     * Execution type, stand-alone/broadcast/MR
      */
     private Integer executeType;
     /**
-     * 执行器类型，Java/Shell
+     * Executor type, Java/Shell
      */
     private Integer processorType;
     /**
-     * 执行器信息
+     * Actuator information
      */
     private String processorInfo;
 
-    /* ************************** 运行时配置 ************************** */
+    /* ************************* Runtime configuration ********************* ***** */
     /**
-     * 最大同时运行任务数，默认 1
+     * The maximum number of concurrently running tasks, default 1
      */
     private Integer maxInstanceNum;
     /**
-     * 并发度，同时执行某个任务的最大线程数量
+     * Concurrency, the maximum number of threads executing a task at the same time
      */
     private Integer concurrency;
     /**
-     * 任务整体超时时间
+     * Overall task timeout
      */
     private Long instanceTimeLimit;
 
-    /** ************************** 重试配置 ************************** */
+    /** *************************** Retry configuration****************** *********** */
     private Integer instanceRetryNum;
     private Integer taskRetryNum;
 
     /**
-     * 1 正常运行，2 停止（不再调度）
+     * 1 running normally, 2 stopped (no more scheduling)
      */
     private Integer status;
     /**
-     * 下一次调度时间
+     * Next dispatch time
      */
     private Long nextTriggerTime;
 
-    /* ************************** 繁忙机器配置 ************************** */
+    /* *************************** Busy Machine Configuration******************** ***** */
     /**
-     * 最低CPU核心数量，0代表不限
+     * The minimum number of CPU cores, 0 means unlimited
      */
     private double minCpuCores;
     /**
-     * 最低内存空间，单位 GB，0代表不限
+     * The minimum memory space, in GB, 0 means unlimited
      */
     private double minMemorySpace;
     /**
-     * 最低磁盘空间，单位 GB，0代表不限
+     * The minimum disk space, in GB, 0 means unlimited
      */
     private double minDiskSpace;
 
-    /* ************************** 集群配置 ************************** */
+    /* *************************** Cluster configuration********************** ***** */
     /**
-     * 指定机器运行，空代表不限，非空则只会使用其中的机器运行（多值逗号分割）
+     * Specify the machine to run, empty means unlimited, non-empty will only use one of the machines to run (multi-valued commas)
      */
     private String designatedWorkers;
     /**
-     * 最大机器数量
+     * Maximum number of machines
      */
     private Integer maxWorkerCount;
 
     /**
-     * 报警用户ID列表，多值逗号分隔
+     * Alarm user ID list, multi-value comma separated
      */
     private String notifyUserIds;
 
@@ -128,12 +128,12 @@ public class JobInfoDTO {
     private AlarmConfig alarmConfig;
 
     /**
-     * 任务归类，开放给接入方自由定制
+     * Task classification, open to the access party to customize freely
      */
     private String tag;
 
     /**
-     * 日志配置，包括日志级别、日志方式等配置信息
+     * Log configuration, including configuration information such as log level and log method
      */
     private LogConfig logConfig;
 

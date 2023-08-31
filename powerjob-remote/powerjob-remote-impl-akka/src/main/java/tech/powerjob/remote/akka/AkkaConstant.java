@@ -16,8 +16,8 @@ public class AkkaConstant {
     public static final String SERVER_ACTOR_SYSTEM_NAME = "oms-server";
 
     /**
-     * 获取 actorSystem 名称
-     * @param serverType 当前服务器类型，powerjob-server 为 server，powerjob-worker 为 worker
+     * Get actorSystem name
+     * @param serverType current server type, powerjob-server is server, powerjob-worker is worker
      * @return actorSystemName
      */
     public static String fetchActorSystemName(ServerType serverType) {

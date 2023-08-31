@@ -9,7 +9,7 @@ import tech.powerjob.common.utils.NetUtils;
 import com.google.common.collect.Lists;
 
 /**
- * 测试需要用到的工具类
+ * Tool classes needed for testing Tool classes needed for testing
  *
  * @author tjq
  * @since 2020/4/9

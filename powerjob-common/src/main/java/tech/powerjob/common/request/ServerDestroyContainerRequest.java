@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 服务器销毁容器请求
+ * Server destroy container request
  *
  * @author tjq
  * @since 2020/5/18

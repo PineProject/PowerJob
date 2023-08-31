@@ -9,7 +9,7 @@ import tech.powerjob.common.RemoteConstant;
 import java.util.Map;
 
 /**
- * 构建 Actor Mapping
+ * Construct Actor Mapping
  *
  * @author tjq
  * @since 2023/1/7
@@ -32,7 +32,7 @@ public class AkkaMappingService {
     private static final String DEFAULT_DISPATCH_NAME = "common-dispatcher";
 
     /**
-     * 根据 actor 的 rootPath 获取 Akka Actor Name，不存在改写则使用当前路径
+     * Get the Akka Actor Name according to the actor's rootPath, if there is no rewriting, use the current path
      * @param actorRootPath actorRootPath
      * @return actorName
      */

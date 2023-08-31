@@ -45,7 +45,7 @@ public class AkkaCSInitializer implements CSInitializer {
         Address bindAddress = config.getBindAddress();
         log.info("[PowerJob-AKKA] bindAddress: {}", bindAddress);
 
-        // 初始化 ActorSystem（macOS上 new ServerSocket 检测端口占用的方法并不生效，可能是AKKA是Scala写的缘故？没办法...只能靠异常重试了）
+        // Initialize ActorSystem (the new ServerSocket detection port occupation method on macOS does not work, maybe because AKKA is written in Scala? There is no way... we can only rely on exceptions to retry)
         Map<String, Object> overrideConfig = Maps.newHashMap();
         overrideConfig.put("akka.remote.artery.canonical.hostname", bindAddress.getHost());
         overrideConfig.put("akka.remote.artery.canonical.port", bindAddress.getPort());
@@ -55,11 +55,11 @@ public class AkkaCSInitializer implements CSInitializer {
 
         log.info("[PowerJob-AKKA] try to start AKKA System.");
 
-        // 启动时绑定当前的 actorSystemName
+        // Bind the current actorSystemName
         String actorSystemName = AkkaConstant.fetchActorSystemName(config.getServerType());
         this.actorSystem = ActorSystem.create(actorSystemName, akkaFinalConfig);
 
-        // 处理系统中产生的异常情况
+        // Handle exceptions that occur in the system
         ActorRef troubleshootingActor = actorSystem.actorOf(Props.create(AkkaTroubleshootingActor.class), "troubleshooting");
         actorSystem.eventStream().subscribe(troubleshootingActor, DeadLetter.class);
 

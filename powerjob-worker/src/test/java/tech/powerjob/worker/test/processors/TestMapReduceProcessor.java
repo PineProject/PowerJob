@@ -14,7 +14,7 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- * 测试 MapReduce 处理器
+ * Test the MapReduce processor
  *
  * @author tjq
  * @since 2020/3/24

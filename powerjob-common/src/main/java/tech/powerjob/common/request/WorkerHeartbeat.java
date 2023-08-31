@@ -1,15 +1,15 @@
 package tech.powerjob.common.request;
 
+import lombok.Data;
 import tech.powerjob.common.PowerSerializable;
 import tech.powerjob.common.model.DeployedContainerInfo;
 import tech.powerjob.common.model.SystemMetrics;
-import lombok.Data;
 
 import java.util.List;
 
 
 /**
- * Worker 上报健康信息（worker定时发送的heartbeat）
+ * Worker reports health information (heartbeat sent regularly by worker)
  *
  * @author tjq
  * @since 2020/3/25
@@ -18,47 +18,47 @@ import java.util.List;
 public class WorkerHeartbeat implements PowerSerializable {
 
     /**
-     * 本机地址 -> IP:port
+     * Local machine address -> IP:port
      */
     private String workerAddress;
     /**
-     * 当前 appName
+     * current appName
      */
     private String appName;
     /**
-     * 当前 appId
+     * current appId
      */
     private Long appId;
     /**
-     * 当前时间
+     * current time
      */
     private long heartbeatTime;
     /**
-     * 当前加载的容器（容器名称 -> 容器版本）
+     * The currently loaded container (container name -> container version)
      */
     private List<DeployedContainerInfo> containerInfos;
     /**
-     * worker 版本信息
+     * worker version information
      */
     private String version;
     /**
-     * 使用的通讯协议 AKKA / HTTP
+     * Communication protocol used AKKA / HTTP
      */
     private String protocol;
     /**
-     * worker tag，标识同一个 worker 下的一类集群 ISSUE: 226
+     * worker tag, which identifies a type of cluster under the same worker ISSUE: 226
      */
     private String tag;
     /**
-     * 客户端名称
+     * client name
      */
     private String client;
     /**
-     * 扩展字段
+     * no
      */
     private String extra;
     /**
-     * 是否已经超载，超载的情况下 Server 一段时间内不会再向其派发任务
+     * Is it overloaded? In case of overload, the server will not send tasks to it for a period of time
      */
     private boolean isOverload;
 

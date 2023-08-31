@@ -20,10 +20,10 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * 配置处理器
- * 超简易的配置中心，用于配置的下发，需要配合秒级 + 广播任务使用！
- * 超低成本下的解决方案，强配置 or 高SLA 场景，请使用标准的配置管理中间件。
- * 外部调用方法 {@link ConfigProcessor#fetchConfig()}
+ * Configure the processor
+ * Ultra-simple configuration center, used for configuration distribution, needs to be used with second-level + broadcast tasks!
+ * For ultra-low-cost solutions, strong configuration or high SLA scenarios, please use standard configuration management middleware.
+ * External call method {@link ConfigProcessor#fetchConfig()}
  *
  * @author tjq
  * @since 2022/9/17
@@ -32,8 +32,9 @@ import java.util.Optional;
 public class ConfigProcessor implements BroadcastProcessor {
 
     /**
-     * 获取配置
-     * @return 控制台下发的配置
+     * get configuration
+     *
+     * @return The configuration delivered by the console
      */
     public static Map<String, Object> fetchConfig() {
         if (config == null) {
@@ -50,7 +51,7 @@ public class ConfigProcessor implements BroadcastProcessor {
         Config newCfg = JsonUtils.parseObject(CommonUtils.parseParams(context), Config.class);
         context.getOmsLogger().info("[ConfigProcessor] receive and update config: {}", config);
 
-        // 空场景不更新
+        // Empty scenes are not updated
         final Map<String, Object> realConfig = newCfg.config;
         if (realConfig == null) {
             return new ProcessResult(false, "CONFIG_IS_NULL");
@@ -72,12 +73,12 @@ public class ConfigProcessor implements BroadcastProcessor {
     public static class Config implements Serializable {
 
         /**
-         * 原始配置
+         * original configuration
          */
         private Map<String, Object> config;
 
         /**
-         * 持久到本地的全路径名称
+         * The full path name persisted to the local
          */
         private String persistentFileName;
     }

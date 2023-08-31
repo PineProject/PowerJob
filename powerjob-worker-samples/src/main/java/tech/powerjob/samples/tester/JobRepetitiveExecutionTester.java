@@ -15,8 +15,8 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * 简单任务重复执行检测
- * 有用户反馈偶尔存在重试现象，写一个 Processor 来测试
+ * Simple task repeated execution detection
+ * There are user feedbacks that there are occasional retries, write a Processor to test
  *
  * @author tjq
  * @since 2023/3/7
@@ -28,16 +28,15 @@ public class JobRepetitiveExecutionTester implements BasicProcessor {
     private final AtomicLong repetitions = new AtomicLong();
 
     /**
-     * 存储 jobId_instanceId 方便查问题
-     * 测试代码，就不考虑内存泄漏了
+     * Store jobId_instanceId to facilitate checking problems
+     * Test code, don't consider memory leaks
      */
     private final Set<String> repetitionsInfo = Sets.newHashSet();
     private final Cache<String, Integer> instanceId2Num = CacheBuilder.newBuilder().maximumSize(1024).build();
 
     @Override
     public ProcessResult process(TaskContext context) throws Exception {
-
-        // 纯本地日志打印当前情况
+        // Pure local log prints the current situation
         log.info("[SimpleJobRepetitiveExecutionTester] repetitions:{}, repetitionsInfo: {}", repetitions.get(), repetitionsInfo);
 
         final OmsLogger omsLogger = context.getOmsLogger();
@@ -50,7 +49,7 @@ public class JobRepetitiveExecutionTester implements BasicProcessor {
     private synchronized void check(TaskContext context) {
         String uid = context.getInstanceId() + "_" + Optional.ofNullable(context.getSubInstanceId()).orElse(context.getInstanceId());
         Integer numIfPresent = instanceId2Num.getIfPresent(uid);
-        // 不重复情况下，100% 进入该分支
+        // Without duplication, 100% enter this branch
         if (numIfPresent == null) {
             instanceId2Num.put(uid, 1);
             return;

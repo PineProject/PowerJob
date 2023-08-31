@@ -1,7 +1,7 @@
 package tech.powerjob.common.exception;
 
 /**
- * PowerJob 受检异常，需要开发者手动处理
+ * PowerJob The checked exception needs to be manually handled by the developer
  *
  * @author KFC·D·Fans
  * @since 2021/3/21

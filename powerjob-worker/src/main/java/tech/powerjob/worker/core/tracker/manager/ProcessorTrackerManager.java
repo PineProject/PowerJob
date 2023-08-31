@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 /**
- * 持有 Processor 对象
+ * holds the Processor object
  * instanceId -> Processor
  *
  * @author tjq
@@ -20,12 +20,12 @@ public class ProcessorTrackerManager {
 
     /**
      * instanceId -> (TaskTrackerAddress -> ProcessorTracker)
-     * 处理脑裂情况下同一个 Instance 存在多个 TaskTracker 的情况
+     * Handle the situation where there are multiple TaskTrackers in the same Instance in the case of split brain
      */
     private static final Map<Long, Map<String, ProcessorTracker>> PROCESSOR_TRACKER_CONTAINER = Maps.newHashMap();
 
     /**
-     * 获取 ProcessorTracker，如果不存在则创建
+     * Get the ProcessorTracker, create it if it doesn't exist
      */
     public static synchronized ProcessorTracker getProcessorTracker(Long instanceId, String address, Supplier<ProcessorTracker> creator) {
 

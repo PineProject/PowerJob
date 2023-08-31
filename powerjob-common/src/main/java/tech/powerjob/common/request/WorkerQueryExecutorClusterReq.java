@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * worker 查询 执行器集群（动态上线需要）
+ * worker query executor cluster (required for dynamic online)
  *
  * @author tjq
  * @since 10/17/20

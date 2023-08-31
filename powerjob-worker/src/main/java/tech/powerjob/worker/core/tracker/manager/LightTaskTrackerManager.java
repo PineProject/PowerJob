@@ -22,7 +22,7 @@ public class LightTaskTrackerManager {
     }
 
     public static void removeTaskTracker(Long instanceId) {
-        // 忽略印度的 IDE 警告，这个判断非常有用！！！不加这个判断会导致：如果创建 TT（先执行 computeIfAbsent 正在将TT添加到 HashMap） 时报错，TT 主动调用 destroy 销毁（从 HashMap移除该 TT）时死锁
+        // Ignore IDE warnings for India, this judgment is very useful! ! ! Not adding this judgment will lead to: if creating TT (executing computeIfAbsent first is adding TT to HashMap), an error will be reported, and deadlock will occur when TT actively calls destroy to destroy (remove the TT from HashMap)
         if (INSTANCE_ID_2_TASK_TRACKER.containsKey(instanceId)) {
             INSTANCE_ID_2_TASK_TRACKER.remove(instanceId);
         }

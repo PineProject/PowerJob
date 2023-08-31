@@ -2,12 +2,6 @@ package tech.powerjob.samples.processors;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import tech.powerjob.common.serialize.JsonUtils;
-import tech.powerjob.worker.core.processor.ProcessResult;
-import tech.powerjob.worker.core.processor.TaskContext;
-import tech.powerjob.worker.core.processor.TaskResult;
-import tech.powerjob.worker.core.processor.sdk.MapReduceProcessor;
-import tech.powerjob.worker.log.OmsLogger;
 import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,14 +9,20 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import tech.powerjob.common.serialize.JsonUtils;
+import tech.powerjob.worker.core.processor.ProcessResult;
+import tech.powerjob.worker.core.processor.TaskContext;
+import tech.powerjob.worker.core.processor.TaskResult;
+import tech.powerjob.worker.core.processor.sdk.MapReduceProcessor;
+import tech.powerjob.worker.log.OmsLogger;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * MapReduce 处理器示例
- * 控制台参数：{"batchSize": 100, "batchNum": 2}
+ * MapReduce Processor Example Console Parameters
+ * console parameters：{"batchSize": 100, "batchNum": 2}
  *
  * @author tjq
  * @since 2020/4/17
@@ -40,7 +40,7 @@ public class MapReduceProcessorDemo implements MapReduceProcessor {
         log.info("isRootTask:{}", isRootTask());
         log.info("taskContext:{}", JsonUtils.toJSONString(context));
 
-        // 根据控制台参数获取MR批次及子任务大小
+        // Obtain MR batch and subtask size according to console parameters
         final JSONObject jobParams = Optional.ofNullable(context.getJobParams()).map(JSONObject::parseObject).orElse(new JSONObject());
 
         Integer batchSize = (Integer) jobParams.getOrDefault("batchSize", 100);

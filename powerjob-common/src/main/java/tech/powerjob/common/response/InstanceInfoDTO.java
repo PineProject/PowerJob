@@ -15,60 +15,60 @@ import java.util.Date;
 public class InstanceInfoDTO {
 
     /**
-     * 任务ID
+     * Task ID
      */
     private Long jobId;
     /**
-     * 任务所属应用的ID，冗余提高查询效率
+     * The ID of the application to which the task belongs, redundancy improves query efficiency
      */
     private Long appId;
     /**
-     * 任务实例ID
+     * Task instance ID
      */
     private Long instanceId;
     /**
-     * 工作流实例ID
+     * Workflow instance ID
      */
     private Long wfInstanceId;
     /**
-     * 任务参数
+     * task parameters
      */
     private String jobParams;
     /**
-     * 任务实例参数
+     * Task instance parameters
      */
     private String instanceParams;
     /**
-     * 任务状态 {@link InstanceStatus}
+     * Task Status {@link InstanceStatus}
      */
     private int status;
     /**
-     *  该任务实例的类型，普通/工作流（InstanceType）
+     * The type of the task instance, common/workflow (InstanceType)
      */
     private Integer type;
     /**
-     * 执行结果
+     * Results of the
      */
     private String result;
     /**
-     * 预计触发时间
+     * Estimated trigger time
      */
     private Long expectedTriggerTime;
     /**
-     * 实际触发时间
+     * Actual trigger time
      */
     private Long actualTriggerTime;
     /**
-     * 结束时间
+     * End Time
      */
     private Long finishedTime;
     /**
-     * TaskTracker地址
+     * TaskTracker address
      */
     private String taskTrackerAddress;
 
     /**
-     * 总共执行的次数（用于重试判断）
+     * The total number of executions (for retry judgment)
      */
     private Long runningTimes;
 

@@ -1,6 +1,6 @@
 /**
- * 由于 AKKA 后续转向收费运营模式，PowerJob 计划移除 akka 支持，因此不再维护该 module。
- * 如果存在任何使用上的问题，请切换到其他通讯协议（建议使用 HTTP）
+ * Due to AKKA's subsequent switch to a fee-based operation mode, PowerJob plans to remove akka support, so this module is no longer maintained.
+ * If you have any usage problems, please switch to another communication protocol (HTTP is recommended)
  *
  * @author PowerJob发言人
  * @since 2022/12/31

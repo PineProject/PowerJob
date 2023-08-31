@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Workflow 任务运行状态
+ * Workflow task running status
  *
  * @author tjq
  * @since 2020/5/26
@@ -17,20 +17,20 @@ import java.util.List;
 @AllArgsConstructor
 public enum WorkflowInstanceStatus {
     /**
-     * 初始状态为等待调度
+     * The initial state is waiting for scheduling
      */
-    WAITING(1, "等待调度"),
-    RUNNING(2, "运行中"),
-    FAILED(3, "失败"),
-    SUCCEED(4, "成功"),
-    STOPPED(10, "手动停止");
+    WAITING(1, "Waiting for scheduling"),
+    RUNNING(2, "Running"),
+    FAILED(3, "Failed"),
+    SUCCEED(4, "Success"),
+    STOPPED(10, "Manual stop");
 
     /**
-     * 广义的运行状态
+     * Generalized operating status
      */
-    public static final List<Integer> GENERALIZED_RUNNING_STATUS = Collections.unmodifiableList(Lists.newArrayList(WAITING.v, RUNNING.v));
+    public static final List<Integer> GENERALIZED_RUNNING_STATUS = Collections. unmodifiableList(Lists. newArrayList(WAITING.v, RUNNING.v));
     /**
-     * 结束状态
+     * end state
      */
     public static final List<Integer> FINISHED_STATUS = Collections.unmodifiableList(Lists.newArrayList(FAILED.v, SUCCEED.v, STOPPED.v));
 

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 节点类型
+ * node type
  *
  * @author Echo009
  * @since 2021/3/7
@@ -13,23 +13,23 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum WorkflowNodeType {
     /**
-     * 任务节点
+     * task node
      */
     JOB(1,false),
     /**
-     * 判断节点
+     * Judgment node
      */
     DECISION(2,true),
     /**
-     * 内嵌工作流
+     * Embedded workflow
      */
-    NESTED_WORKFLOW(3,false),
+    NESTED_WORKFLOW(3, false),
 
     ;
 
     private final int code;
     /**
-     * 控制节点
+     * Control node
      */
     private final boolean controlNode;
 

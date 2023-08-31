@@ -1,14 +1,14 @@
 package tech.powerjob.samples.tester;
 
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.stereotype.Component;
 import tech.powerjob.worker.core.processor.ProcessResult;
 import tech.powerjob.worker.core.processor.TaskContext;
 import tech.powerjob.worker.core.processor.sdk.BasicProcessor;
 import tech.powerjob.worker.log.OmsLogger;
-import org.springframework.stereotype.Component;
 
 /**
- * 测试 Oms 在线日志的性能
+ * Test the performance of Oms online log
  *
  * @author tjq
  * @since 2020/5/3
@@ -22,7 +22,7 @@ public class OmsLogPerformanceTester implements BasicProcessor {
     public ProcessResult process(TaskContext context) throws Exception {
 
         OmsLogger omsLogger = context.getOmsLogger();
-        // 控制台参数，格式为 {"num":10000, "interval": 200}
+        // Console parameters, the format is {"num":10000, "interval": 200}
         JSONObject jobParams = JSONObject.parseObject(context.getJobParams());
         Long num = jobParams.getLong("num");
         Long interval = jobParams.getLong("interval");
@@ -42,7 +42,7 @@ public class OmsLogPerformanceTester implements BasicProcessor {
             omsLogger.error("Oh, it seems that we have got an exception.", re);
             try {
                 Thread.sleep(interval);
-            }catch (Exception ignore) {
+            } catch (Exception ignore) {
             }
         }
 

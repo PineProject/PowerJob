@@ -3,7 +3,7 @@ package tech.powerjob.samples;
 import org.springframework.stereotype.Service;
 
 /**
- * 神秘服务
+ * mystery service
  *
  * @author tjq
  * @since 2020/4/18
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class MysteryService {
 
     public String hasaki() {
-        return "面对疾风吧～";
+        return "Let's face the wind～";
     }
 
 }

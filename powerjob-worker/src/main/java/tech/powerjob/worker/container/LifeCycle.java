@@ -1,7 +1,7 @@
 package tech.powerjob.worker.container;
 
 /**
- * 生命周期
+ * life cycle
  *
  * @author tjq
  * @since 2020/5/15
@@ -9,14 +9,14 @@ package tech.powerjob.worker.container;
 public interface LifeCycle {
 
     /**
-     * 初始化
-     * @throws Exception 初始化异常
+     * initialization
+     * @throws Exception initialization exception
      */
     void init() throws Exception;
 
     /**
-     * 销毁
-     * @throws Exception 销毁异常
+     * destroy
+     * @throws Exception destruction exception
      */
     void destroy() throws Exception;
 }

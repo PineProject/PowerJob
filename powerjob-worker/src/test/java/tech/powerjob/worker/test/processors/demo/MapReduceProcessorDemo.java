@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * 示例-MapReduce任务处理器
+ * Example - MapReduce Task Processor
  *
  * @author tjq
  * @since 2020/4/15
@@ -19,27 +19,27 @@ public class MapReduceProcessorDemo implements MapReduceProcessor {
 
     @Override
     public ProcessResult process(TaskContext context) throws Exception {
-        // 判断是否为根任务
+        // Determine whether it is a root task
         if (isRootTask()) {
 
-            // 构造子任务
+            // constructor subtask
             List<SubTask> subTaskList = Lists.newLinkedList();
 
             /*
-             * 子任务的构造由开发者自己定义
-             * eg. 现在需要从文件中读取100W个ID，并处理数据库中这些ID对应的数据，那么步骤如下：
-             * 1. 根任务（RootTask）读取文件，流式拉取100W个ID，并按1000个一批的大小组装成子任务进行派发
-             * 2. 非根任务获取子任务，完成业务逻辑的处理
+             * The structure of subtasks is defined by the developer
+             * e.g. Now it is necessary to read 100W IDs from the file and process the data corresponding to these IDs in the database, then the steps are as follows:
+             * 1. The root task (RootTask) reads the file, stream pulls 1 million IDs, and assembles them into subtasks in batches of 1000 for distribution
+             * 2. Non-root tasks obtain subtasks to complete business logic processing
              */
 
-            // 调用 map 方法，派发子任务
+            // Call the map method to dispatch subtasks
             map(subTaskList, "DATA_PROCESS_TASK");
             return new ProcessResult(true, "map successfully");
         }
 
-        // 非子任务，可根据 subTask 的类型 或 TaskName 来判断分支
+        // Non-subtask, branch can be judged according to the type of subTask or TaskName
         if (context.getSubTask() instanceof SubTask) {
-            // 执行子任务，注：子任务人可以 map 产生新的子任务，可以构建任意级的 MapReduce 处理器
+            // Execute subtasks, note: Subtask operators can map to generate new subtasks, and can build MapReduce processors of any level
             return new ProcessResult(true, "PROCESS_SUB_TASK_SUCCESS");
         }
 
@@ -49,10 +49,10 @@ public class MapReduceProcessorDemo implements MapReduceProcessor {
     @Override
     public ProcessResult reduce(TaskContext taskContext, List<TaskResult> taskResults) {
 
-        // 所有 Task 执行结束后，reduce 将会被执行
-        // taskResults 保存了所有子任务的执行结果
+        // After all tasks are executed, reduce will be executed
+        // taskResults Save the execution results of all subtasks
 
-        // 用法举例，统计执行结果
+        // Usage example, statistical execution results
         AtomicLong successCnt = new AtomicLong(0);
         taskResults.forEach(tr -> {
             if (tr.isSuccess()) {
@@ -62,7 +62,7 @@ public class MapReduceProcessorDemo implements MapReduceProcessor {
         return new ProcessResult(true, "success task num:" + successCnt.get());
     }
 
-    // 自定义的子任务
+    // custom subtasks
     private static class SubTask {
         private Long siteId;
         private List<Long> idList;

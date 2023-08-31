@@ -6,7 +6,7 @@ import tech.powerjob.worker.core.processor.TaskContext;
 import tech.powerjob.worker.core.processor.sdk.BasicProcessor;
 
 /**
- * 测试用的基础处理器
+ * base processor for testing
  *
  * @author tjq
  * @since 2020/3/24

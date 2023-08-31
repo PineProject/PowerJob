@@ -1,14 +1,14 @@
 package tech.powerjob.samples.config;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import tech.powerjob.common.utils.CommonUtils;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.h2.Driver;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import tech.powerjob.common.utils.CommonUtils;
 import tech.powerjob.official.processors.impl.sql.SpringDatasourceSqlProcessor;
 import tech.powerjob.worker.PowerJobWorker;
 
@@ -32,9 +32,9 @@ public class SqlProcessorConfiguration {
         config.setDriverClassName(Driver.class.getName());
         config.setJdbcUrl(jdbcUrl);
         config.setAutoCommit(true);
-        // 池中最小空闲连接数量
+        // The minimum number of idle connections in the pool
         config.setMinimumIdle(1);
-        // 池中最大连接数量
+        // Maximum number of connections in the pool
         config.setMaximumPoolSize(10);
         return new HikariDataSource(config);
     }
@@ -45,7 +45,7 @@ public class SqlProcessorConfiguration {
         SpringDatasourceSqlProcessor springDatasourceSqlProcessor = new SpringDatasourceSqlProcessor(dataSource);
         // do nothing
         springDatasourceSqlProcessor.registerSqlValidator("fakeSqlValidator", sql -> true);
-        // 排除掉包含 drop 的 SQL
+        // Exclude SQL containing drop
         springDatasourceSqlProcessor.registerSqlValidator("interceptDropValidator", sql -> sql.matches("^(?i)((?!drop).)*$"));
         // do nothing
         springDatasourceSqlProcessor.setSqlParser((sql, taskContext) -> sql);

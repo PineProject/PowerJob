@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 
 /**
- * 单机处理器 示例
+ * Standalone Processor Example
  *
  * @author tjq
  * @since 2020/4/17
@@ -26,7 +26,7 @@ public class StandaloneProcessorDemo implements BasicProcessor {
         omsLogger.info("StandaloneProcessorDemo start process,context is {}.", context);
         omsLogger.info("Notice! If you want this job process failed, your jobParams need to be 'failed'");
         omsLogger.info("Let's test the exception~");
-        // 测试异常日志
+        // Test exception log
         try {
             Collections.emptyList().add("277");
         } catch (Exception e) {
@@ -36,13 +36,13 @@ public class StandaloneProcessorDemo implements BasicProcessor {
         log.info("jobParam:{}", context.getJobParams());
         log.info("instanceParams:{}", context.getInstanceParams());
         String param;
-        // 解析参数，非处于工作流中时，优先取实例参数（允许动态[instanceParams]覆盖静态参数[jobParams]）
+        // When parsing parameters, when not in the workflow, instance parameters are preferred (allowing dynamic [instanceParams] to override static parameters [jobParams])
         if (context.getWorkflowContext() == null) {
             param = StringUtils.isBlank(context.getInstanceParams()) ? context.getJobParams() : context.getInstanceParams();
         } else {
             param = context.getJobParams();
         }
-        // 根据参数判断是否成功
+        // Judging whether it is successful according to the parameters
         boolean success = !"failed".equals(param);
         omsLogger.info("StandaloneProcessorDemo finished process,success: {}", success);
         omsLogger.info("anyway, we finished the job successfully~Congratulations!");

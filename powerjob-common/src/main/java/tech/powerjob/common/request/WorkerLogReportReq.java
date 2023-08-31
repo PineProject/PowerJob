@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * 日志上报请求
+ * log report request
  *
  * @author tjq
  * @since 2020/4/23

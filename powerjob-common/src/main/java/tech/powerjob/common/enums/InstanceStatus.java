@@ -18,23 +18,22 @@ public enum InstanceStatus {
     /**
      *
      */
-    WAITING_DISPATCH(1, "等待派发"),
-    WAITING_WORKER_RECEIVE(2, "等待Worker接收"),
-    RUNNING(3, "运行中"),
-    FAILED(4, "失败"),
-    SUCCEED(5, "成功"),
-    CANCELED(9, "取消"),
-    STOPPED(10, "手动停止");
-
+    WAITING_DISPATCH(1, "Waiting for dispatch"),
+    WAITING_WORKER_RECEIVE(2, "Waiting for Worker to receive"),
+    RUNNING(3, "Running"),
+    FAILED(4, "Failed"),
+    SUCCEED(5, "Success"),
+    CANCELED(9, "Cancel"),
+    STOPPED(10, "Manual stop");
     private final int v;
     private final String des;
 
     /**
-     * 广义的运行状态
+     * Generalized operating status
      */
     public static final List<Integer> GENERALIZED_RUNNING_STATUS = Lists.newArrayList(WAITING_DISPATCH.v, WAITING_WORKER_RECEIVE.v, RUNNING.v);
     /**
-     * 结束状态
+     * end state
      */
     public static final List<Integer> FINISHED_STATUS = Lists.newArrayList(FAILED.v, SUCCEED.v, CANCELED.v, STOPPED.v);
 

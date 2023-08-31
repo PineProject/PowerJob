@@ -1,7 +1,7 @@
 package tech.powerjob.common.exception;
 
 /**
- * PowerJob 运行时异常
+ * PowerJob runtime exception
  *
  * @author tjq
  * @since 2020/5/26

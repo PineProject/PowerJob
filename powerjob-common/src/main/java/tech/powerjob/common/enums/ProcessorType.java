@@ -13,14 +13,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ProcessorType {
 
-    BUILT_IN(1, "内建处理器"),
-    EXTERNAL(4, "外部处理器（动态加载）"),
+    BUILT_IN(1, "Built-in Processor"),
+    EXTERNAL(4, "External Processor (Dynamic Loading)"),
 
     @Deprecated
-    SHELL(2, "SHELL脚本"),
+    SHELL(2, "SHELL script"),
     @Deprecated
-    PYTHON(3, "Python脚本");
-
+    PYTHON(3, "Python script");
     private final int v;
     private final String des;
 

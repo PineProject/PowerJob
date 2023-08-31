@@ -1,22 +1,22 @@
 package tech.powerjob.samples.processors;
 
-import tech.powerjob.common.serialize.JsonUtils;
-import tech.powerjob.samples.MysteryService;
-import tech.powerjob.worker.core.processor.ProcessResult;
-import tech.powerjob.worker.core.processor.TaskContext;
-import tech.powerjob.worker.core.processor.sdk.MapProcessor;
 import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+import tech.powerjob.common.serialize.JsonUtils;
+import tech.powerjob.samples.MysteryService;
+import tech.powerjob.worker.core.processor.ProcessResult;
+import tech.powerjob.worker.core.processor.TaskContext;
+import tech.powerjob.worker.core.processor.sdk.MapProcessor;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Map处理器 示例
+ * Map processor example
  *
  * @author tjq
  * @since 2020/4/18
@@ -28,11 +28,11 @@ public class MapProcessorDemo implements MapProcessor {
     private MysteryService mysteryService;
 
     /**
-     * 每一批发送任务大小
+     * The size of each batch of sending tasks
      */
     private static final int BATCH_SIZE = 100;
     /**
-     * 发送的批次
+     * batch sent
      */
     private static final int BATCH_NUM = 5;
 
@@ -59,29 +59,28 @@ public class MapProcessorDemo implements MapProcessor {
             map(subTasks, "MAP_TEST_TASK");
             return new ProcessResult(true, "map successfully");
         } else {
-
             log.info("==== PROCESS ====");
             SubTask subTask = (SubTask) context.getSubTask();
             for (Integer itemId : subTask.getItemIds()) {
                 if (Thread.interrupted()) {
-                    // 任务被中断
+                    // task was interrupted
                     log.info("job has been stop! so stop to process subTask: {} => {}", subTask.getSiteId(), itemId);
                     break;
                 }
                 log.info("processing subTask: {} => {}", subTask.getSiteId(), itemId);
                 int max = Integer.MAX_VALUE >> 7;
                 for (int i = 0; ; i++) {
-                    // 模拟耗时操作
+                    // Simulate time-consuming operations
                     if (i > max) {
                         break;
                     }
                 }
             }
-            // 测试在 Map 任务中追加上下文
+            // Test append context in Map task
             context.getWorkflowContext().appendData2WfContext("Yasuo", "A sword's poor company for a long road.");
             boolean b = ThreadLocalRandom.current().nextBoolean();
             if (context.getCurrentRetryTimes() >= 1) {
-                // 重试的话一定会成功
+                // It will succeed if you try again
                 b = true;
             }
             return new ProcessResult(b, "RESULT:" + b);

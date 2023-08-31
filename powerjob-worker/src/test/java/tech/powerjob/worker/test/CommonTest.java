@@ -7,7 +7,7 @@ import tech.powerjob.worker.pojo.model.InstanceInfo;
 import tech.powerjob.worker.pojo.request.TaskTrackerStartTaskReq;
 
 /**
- * 启动公共服务
+ * start public service
  *
  * @author tjq
  * @since 2020/6/17

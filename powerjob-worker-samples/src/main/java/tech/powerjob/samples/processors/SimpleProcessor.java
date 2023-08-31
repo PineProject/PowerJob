@@ -22,9 +22,9 @@ public class SimpleProcessor implements BasicProcessor {
         logger.info("Current context:{}", context.getWorkflowContext());
         logger.info("Current job params:{}", jobParams);
 
-        // 测试中文问题 #581
+        // Test Chinese questions #581
         if (jobParams.contains("CN")) {
-            return new ProcessResult(true, "任务成功啦！！！");
+            return new ProcessResult(true, "mission successful！！！");
         }
 
         return jobParams.contains("F") ? new ProcessResult(false) : new ProcessResult(true, "yeah!");

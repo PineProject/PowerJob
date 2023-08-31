@@ -41,7 +41,7 @@ public class InstanceDetail implements PowerSerializable {
      */
     private String taskTrackerAddress;
     /**
-     * 任务参数
+     * Task parameters
      */
     private String jobParams;
     /**

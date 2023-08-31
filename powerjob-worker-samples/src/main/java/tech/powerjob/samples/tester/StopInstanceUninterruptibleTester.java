@@ -7,7 +7,7 @@ import tech.powerjob.worker.core.processor.TaskContext;
 import tech.powerjob.worker.core.processor.sdk.BasicProcessor;
 
 /**
- * 停止实例 (不可中断)
+ * Stop the instance (uninterruptible)
  *
  * @author Echo009
  * @since 2023/1/15
@@ -22,8 +22,8 @@ public class StopInstanceUninterruptibleTester implements BasicProcessor {
         while (true) {
             //  uninterruptible
             i++;
-            if (i % 1000000000 == 0){
-                log.info("taskInstance({}) is running ...",context.getInstanceId());
+            if (i % 1_000_000_000 == 0) {
+                log.info("taskInstance({}) is running ...", context.getInstanceId());
             }
         }
     }

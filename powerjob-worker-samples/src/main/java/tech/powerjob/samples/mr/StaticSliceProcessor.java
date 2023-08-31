@@ -1,23 +1,23 @@
 package tech.powerjob.samples.mr;
 
-import tech.powerjob.worker.core.processor.ProcessResult;
-import tech.powerjob.worker.core.processor.TaskContext;
-import tech.powerjob.worker.core.processor.TaskResult;
-import tech.powerjob.worker.core.processor.sdk.MapReduceProcessor;
-import tech.powerjob.worker.log.OmsLogger;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+import tech.powerjob.worker.core.processor.ProcessResult;
+import tech.powerjob.worker.core.processor.TaskContext;
+import tech.powerjob.worker.core.processor.TaskResult;
+import tech.powerjob.worker.core.processor.sdk.MapReduceProcessor;
+import tech.powerjob.worker.log.OmsLogger;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * MapReduce 模拟 静态分片
- * 典型的杀鸡焉用牛刀～
+ * MapReduce simulation static sharding
+ * A typical way to kill a chicken with a sledgehammer～
  *
  * @author tjq
  * @since 2020/5/21
@@ -29,9 +29,9 @@ public class StaticSliceProcessor implements MapReduceProcessor {
     public ProcessResult process(TaskContext context) throws Exception {
         OmsLogger omsLogger = context.getOmsLogger();
 
-        // root task 负责分发任务
+        // root task Responsible for distributing tasks
         if (isRootTask()) {
-            // 从控制台传递分片参数，假设格式为KV：1=a&2=b&3=c
+            // Pass the shard parameters from the console, assuming the format is KV：1=a&2=b&3=c
             String jobParams = context.getJobParams();
             Map<String, String> paramsMap = Splitter.on("&").withKeyValueSeparator("=").split(jobParams);
 
@@ -43,8 +43,8 @@ public class StaticSliceProcessor implements MapReduceProcessor {
 
         Object subTask = context.getSubTask();
         if (subTask instanceof SubTask) {
-            // 实际处理
-            // 当然，如果觉得 subTask 还是很大，也可以继续分发哦
+            // Actual processing
+            // Of course, if you think subTask is still too big, you can continue to distribute it
 
             return new ProcessResult(true, "subTask:" + ((SubTask) subTask).getIndex() + " process successfully");
         }
@@ -53,7 +53,7 @@ public class StaticSliceProcessor implements MapReduceProcessor {
 
     @Override
     public ProcessResult reduce(TaskContext context, List<TaskResult> taskResults) {
-        // 按需求做一些统计工作... 不需要的话，直接使用 Map 处理器即可
+        // Do some statistical work as needed... If you don't need it, just use the Map processor directly
         return new ProcessResult(true, "xxxx");
     }
 

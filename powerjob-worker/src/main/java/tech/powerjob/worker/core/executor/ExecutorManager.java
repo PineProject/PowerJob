@@ -13,15 +13,15 @@ import java.util.concurrent.*;
 @Getter
 public class ExecutorManager {
     /**
-     * 执行 Worker 底层核心任务
+     * Execute the underlying core tasks of Worker
      */
     private final ScheduledExecutorService coreExecutor;
     /**
-     * 执行轻量级任务状态上报
+     * Execute lightweight task status reporting
      */
     private final ScheduledExecutorService lightweightTaskStatusCheckExecutor;
     /**
-     * 执行轻量级任务
+     * Perform lightweight tasks
      */
     private final ExecutorService lightweightTaskExecutorService;
 
@@ -30,16 +30,16 @@ public class ExecutorManager {
 
 
         final int availableProcessors = Runtime.getRuntime().availableProcessors();
-        // 初始化定时线程池
+        //Initialize the timing thread pool
         ThreadFactory coreThreadFactory = new ThreadFactoryBuilder().setNameFormat("powerjob-worker-core-%d").build();
-        coreExecutor =  new ScheduledThreadPoolExecutor(3, coreThreadFactory);
+        coreExecutor = new ScheduledThreadPoolExecutor(3, coreThreadFactory);
 
         ThreadFactory lightTaskReportFactory = new ThreadFactoryBuilder().setNameFormat("powerjob-worker-light-task-status-check-%d").build();
-        // 都是 io 密集型任务
-        lightweightTaskStatusCheckExecutor =  new ScheduledThreadPoolExecutor(availableProcessors * 10, lightTaskReportFactory);
+        // All are io-intensive tasks
+        lightweightTaskStatusCheckExecutor = new ScheduledThreadPoolExecutor(availableProcessors * 10, lightTaskReportFactory);
 
         ThreadFactory lightTaskExecuteFactory = new ThreadFactoryBuilder().setNameFormat("powerjob-worker-light-task-execute-%d").build();
-        // 大部分任务都是 io 密集型
+        // Most tasks are io intensive
         lightweightTaskExecutorService = new ThreadPoolExecutor(availableProcessors * 10,availableProcessors * 10, 120L, TimeUnit.SECONDS,
                 new ArrayBlockingQueue<>((workerConfig.getMaxLightweightTaskNum() * 2),true), lightTaskExecuteFactory, new ThreadPoolExecutor.AbortPolicy());
 

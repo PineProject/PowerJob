@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * 功能验证用处理器，帮助用户快速验证想要测试的功能
+ * Processor for functional verification, helping users quickly verify the functions they want to test
  *
  * @author tjq
  * @since 2023/8/13
@@ -136,36 +136,36 @@ public class VerificationProcessor extends CommonBasicProcessor implements MapRe
         return new ProcessResult(true, "postProcess successfully!");
     }
 
-    /* ************************** 广播任务部分 ************************** */
+    /* ************************** broadcast task section ************************** */
 
     enum Mode {
         /**
-         * 常规模式，直接返回响应
+         * Normal mode, return the response directly
          * {"mode":"BASE","responseSize":12}
          */
         BASE,
         /**
-         * 超时，sleep 一段时间测试超时控制
+         * Timeout, sleep for a period of time to test timeout control
          * {"mode":"TIMEOUT","sleepMs":3600000}
          */
         TIMEOUT,
         /**
-         * 测试执行失败，响应返回 success = false
+         * Test execution failed, the response returns success = false
          * {"mode":"ERROR"}
          */
         ERROR,
         /**
-         * 测试执行异常，抛出异常
+         * Test execution exception, throw exception
          * {"mode":"EXCEPTION"}
          */
         EXCEPTION,
         /**
-         * MapReduce，需要控制台配置为 MapReduce 执行模式
+         * MapReduce, the console needs to be configured as MapReduce execution mode
          * {"mode":"MR","batchNum": 10, "batchSize": 20,"subTaskSuccessRate":0.7}
          */
         MR,
         /**
-         * 重试后成功，JOB 配置 Task 重试次数
+         * Success after retries, JOB configures Task retries
          * {"mode":"EXCEPTION"}
          */
         RETRY
@@ -184,23 +184,23 @@ public class VerificationProcessor extends CommonBasicProcessor implements MapRe
     @Data
     public static class VerificationParam implements Serializable {
         /**
-         * 验证模式
+         * verification mode
          */
         private String mode;
         /**
-         * 休眠时间，用于验证超时
+         * sleep time, used for verification timeout
          */
         private Long sleepMs;
         /**
-         * 【MR】批次大小，用于验证 MapReduce
+         * [MR] Batch size for validating MapReduce
          */
         private Integer batchSize;
         /**
-         * 【MR】batchNum
+         * [MR] batchNum
          */
         private Integer batchNum;
         /**
-         * 【MR】子任务成功率
+         * [MR] Subtask success rate
          */
         private Double subTaskSuccessRate;
 

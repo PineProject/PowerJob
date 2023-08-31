@@ -31,7 +31,7 @@ public enum TimeExpressionType {
 
     public static final List<Integer> FREQUENT_TYPES = Collections.unmodifiableList(Lists.newArrayList(FIXED_RATE.v, FIXED_DELAY.v));
     /**
-     * 首次计算触发时间时必须计算出一个有效值
+     * A valid value must be calculated the first time the trigger time is calculated
      */
     public static final List<Integer> INSPECT_TYPES =  Collections.unmodifiableList(Lists.newArrayList(CRON.v, DAILY_TIME_INTERVAL.v));
 

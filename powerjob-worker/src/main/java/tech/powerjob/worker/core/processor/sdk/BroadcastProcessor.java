@@ -7,7 +7,7 @@ import tech.powerjob.worker.core.processor.TaskResult;
 import java.util.List;
 
 /**
- * 广播执行处理器，适用于广播执行
+ * Broadcast execution processor, suitable for broadcast execution
  *
  * @author tjq
  * @since 2020/3/18
@@ -15,13 +15,13 @@ import java.util.List;
 public interface BroadcastProcessor extends BasicProcessor {
 
     /**
-     * 在所有节点广播执行前执行，只会在一台机器执行一次
+     * Execute before all nodes broadcast and execute, and only execute once on one machine
      */
     default ProcessResult preProcess(TaskContext context) throws Exception {
         return new ProcessResult(true);
     }
     /**
-     * 在所有节点广播执行完成后执行，只会在一台机器执行一次
+     * Executed after all node broadcast executions are completed, and will only be executed once on one machine
      */
     default ProcessResult postProcess(TaskContext context, List<TaskResult> taskResults) throws Exception {
         return defaultResult(taskResults);

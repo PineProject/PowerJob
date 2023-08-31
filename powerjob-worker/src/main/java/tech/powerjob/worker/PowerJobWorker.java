@@ -42,7 +42,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * 客户端启动类
+ * Client startup class
  *
  * @author KFCFans
  * @since 2020/3/16
@@ -74,14 +74,14 @@ public class PowerJobWorker {
 
         try {
             PowerBannerPrinter.print();
-            // 校验 appName
+            // check appName
             if (!config.isEnableTestMode()) {
                 assertAppName();
             } else {
                 log.warn("[PowerJobWorker] using TestMode now, it's dangerous if this is production env.");
             }
 
-            // 初始化网络数据，区别对待上报地址和本机绑定地址（对外统一使用上报地址）
+            // Initialize the network data, and treat the report address and the local binding address differently (use the report address uniformly for external parties)
             String localBindIp = NetUtils.getLocalHost();
             int localBindPort = config.getPort();
             String externalIp = PropertyUtils.readProperty(PowerJobDKey.NT_EXTERNAL_ADDRESS, localBindIp);
@@ -89,20 +89,20 @@ public class PowerJobWorker {
             log.info("[PowerJobWorker] [ADDRESS_INFO] localBindIp: {}, localBindPort: {}; externalIp: {}, externalPort: {}", localBindIp, localBindPort, externalIp, externalPort);
             workerRuntime.setWorkerAddress(Address.toFullAddress(externalIp, Integer.parseInt(externalPort)));
 
-            // 初始化 线程池
+            // Initialize the thread pool
             final ExecutorManager executorManager = new ExecutorManager(workerRuntime.getWorkerConfig());
             workerRuntime.setExecutorManager(executorManager);
 
-            // 初始化 ProcessorLoader
+            // initialization ProcessorLoader
             ProcessorLoader processorLoader = buildProcessorLoader(workerRuntime);
             workerRuntime.setProcessorLoader(processorLoader);
 
-            // 初始化 actor
+            // initialization actor
             TaskTrackerActor taskTrackerActor = new TaskTrackerActor(workerRuntime);
             ProcessorTrackerActor processorTrackerActor = new ProcessorTrackerActor(workerRuntime);
             WorkerActor workerActor = new WorkerActor(workerRuntime, taskTrackerActor);
 
-            // 初始化通讯引擎
+            // Initialize the communication engine
             EngineConfig engineConfig = new EngineConfig()
                     .setType(config.getProtocol().name())
                     .setServerType(ServerType.WORKER)
@@ -112,7 +112,7 @@ public class PowerJobWorker {
             EngineOutput engineOutput = remoteEngine.start(engineConfig);
             workerRuntime.setTransporter(engineOutput.getTransporter());
 
-            // 连接 server
+            // connect server
             ServerDiscoveryService serverDiscoveryService = new ServerDiscoveryService(workerRuntime.getAppId(), workerRuntime.getWorkerConfig());
 
             serverDiscoveryService.start(workerRuntime.getExecutorManager().getCoreExecutor());
@@ -120,18 +120,18 @@ public class PowerJobWorker {
 
             log.info("[PowerJobWorker] PowerJobRemoteEngine initialized successfully.");
 
-            // 初始化日志系统
+            // Initialize the logging system
             OmsLogHandler omsLogHandler = new OmsLogHandler(workerRuntime.getWorkerAddress(), workerRuntime.getTransporter(), serverDiscoveryService);
             workerRuntime.setOmsLogHandler(omsLogHandler);
 
-            // 初始化存储
+            // Initialize storage
             TaskPersistenceService taskPersistenceService = new TaskPersistenceService(workerRuntime.getWorkerConfig().getStoreStrategy());
             taskPersistenceService.init();
             workerRuntime.setTaskPersistenceService(taskPersistenceService);
             log.info("[PowerJobWorker] local storage initialized successfully.");
 
 
-            // 初始化定时任务
+            // Initialize scheduled tasks
             workerRuntime.getExecutorManager().getCoreExecutor().scheduleAtFixedRate(new WorkerHealthReporter(workerRuntime), 0, config.getHealthReportInterval(), TimeUnit.SECONDS);
             workerRuntime.getExecutorManager().getCoreExecutor().scheduleWithFixedDelay(omsLogHandler.logSubmitter, 0, 5, TimeUnit.SECONDS);
 
@@ -178,7 +178,7 @@ public class PowerJobWorker {
         List<ProcessorFactory> customPF = Optional.ofNullable(runtime.getWorkerConfig().getProcessorFactoryList()).orElse(Collections.emptyList());
         List<ProcessorFactory> finalPF = Lists.newArrayList(customPF);
 
-        // 后置添加2个系统 ProcessorLoader
+        // Add 2 systems in the rear ProcessorLoader
         finalPF.add(new BuiltInDefaultProcessorFactory());
         finalPF.add(new JarContainerProcessorFactory(runtime));
 

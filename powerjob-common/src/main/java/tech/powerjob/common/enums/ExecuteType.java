@@ -15,11 +15,11 @@ public enum ExecuteType {
     /**
      * Standalone type of task.
      */
-    STANDALONE(1, "单机执行"),
+    STANDALONE(1, "stand-alone execution"),
     /**
      * Broadcast type of task.
      */
-    BROADCAST(2, "广播执行"),
+    BROADCAST(2, "Broadcast execution"),
     /**
      * MapReduce type of task.
      */

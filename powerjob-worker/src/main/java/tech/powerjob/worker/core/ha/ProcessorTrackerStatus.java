@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ProcessorTracker 的状态
+ * ProcessorTracker status
  *
  * @author tjq
  * @since 2020/3/27
@@ -17,84 +17,84 @@ public class ProcessorTrackerStatus {
     private static final int DISPATCH_THRESHOLD = 20;
     private static final int HEARTBEAT_TIMEOUT_MS = 60000;
 
-    // 冗余存储一份 address 地址
+    // Redundantly store an address address
     private String address;
-    // 上次活跃时间
+    // last active time
     private long lastActiveTime;
-    // 等待执行任务数
+    // number of tasks waiting to be executed
     private long remainTaskNum;
-    // 是否被派发过任务
+    // Whether the task has been dispatched
     private boolean dispatched;
-    // 是否接收到过来自 ProcessorTracker 的心跳
+    // Whether a heartbeat from ProcessorTracker has been received
     private boolean connected;
 
     /**
-     * 初始化 ProcessorTracker，此时并未持有实际的 ProcessorTracker 状态
+     * Initialize ProcessorTracker, at this time does not hold the actual ProcessorTracker state
      */
     public void init(String address) {
         this.address = address;
         this.lastActiveTime = - 1;
         this.remainTaskNum = 0;
-        this.dispatched = false;
-        this.connected = false;
+        this. dispatched = false;
+        this. connected = false;
     }
 
     /**
-     * 接收到 ProcessorTracker 的心跳信息后，更新状态
-     * @param req ProcessorTracker的心跳信息
+     * After receiving the heartbeat information of ProcessorTracker, update the status
+     * @param req ProcessorTracker's heartbeat information
      */
     public void update(ProcessorTrackerStatusReportReq req) {
 
-        // 延迟到达的请求，直接忽略
-        if (req.getTime() <= lastActiveTime) {
+        // Requests that arrive late, ignore them directly
+        if (req. getTime() <= lastActiveTime) {
             return;
         }
 
         this.address = req.getAddress();
         this.lastActiveTime = req.getTime();
         this.remainTaskNum = req.getRemainTaskNum();
-        this.dispatched = true;
+        this. dispatched = true;
         this.connected = true;
     }
 
     /**
-     * 是否可用
+     * it's usable or not
      */
     public boolean available() {
 
-        // 未曾派发过，默认可用
+        // Never dispatched, available by default
         if (!dispatched) {
             return true;
         }
 
-        // 已派发但未收到响应，则不可用
+        // dispatched but no response received, unavailable
         if (!connected) {
             return false;
         }
 
-        // 长时间未收到心跳消息，则不可用
+        // If the heartbeat message has not been received for a long time, it is unavailable
         if (isTimeout()) {
             return false;
         }
 
-        // 留有过多待处理任务，则不可用
+        // If there are too many pending tasks, it is unavailable
         if (remainTaskNum >= DISPATCH_THRESHOLD) {
             return false;
         }
 
-        // TODO：后续考虑加上机器健康度等信息
+        // TODO: Add information such as machine health and other information for subsequent consideration
 
         return true;
     }
 
     /**
-     * 是否超时（超过一定时间没有收到心跳）
+     * Whether it timed out (the heartbeat was not received for more than a certain period of time)
      */
     public boolean isTimeout() {
         if (dispatched) {
             return System.currentTimeMillis() - lastActiveTime > HEARTBEAT_TIMEOUT_MS;
         }
-        // 未曾派发过任务的机器，不用处理
+        // Machines that have never dispatched tasks do not need to be processed
         return false;
     }
 

@@ -9,21 +9,25 @@ import tech.powerjob.worker.log.OmsLogger;
 public class SpringMethodProcessorService {
 
     /**
-     * 处理器配置方法1： 全限定类名#方法名，比如 tech.powerjob.samples.tester.SpringMethodProcessorService#testEmptyReturn
-     * 处理器配置方法2： SpringBean名称#方法名，比如 springMethodProcessorService#testEmptyReturn
-     * @param context 必须要有入参 TaskContext，返回值可以是 null，也可以是其他任意类型。正常返回代表成功，抛出异常代表执行失败
+     * Processor configuration method 1:
+     *      fully qualified class name#method name, such as tech.powerjob.samples.tester.SpringMethodProcessorService#testEmptyReturn
+     * Processor configuration method 2:
+     *      SpringBean name#method name, such as springMethodProcessorService#testEmptyReturn
+     *
+     * @param context must have an input parameter TaskContext, and the return value can be null or any other type.
+     *                Returning normally means success, and throwing an exception means execution failure
      */
     @PowerJobHandler(name = "testEmptyReturn")
     public void testEmptyReturn(TaskContext context) {
         OmsLogger omsLogger = context.getOmsLogger();
-        omsLogger.warn("测试日志");
+        omsLogger.warn("test log");
     }
 
 
     @PowerJobHandler(name = "testNormalReturn")
     public String testNormalReturn(TaskContext context) {
         OmsLogger omsLogger = context.getOmsLogger();
-        omsLogger.warn("测试日志");
+        omsLogger.warn("test log");
         return "testNormalReturn";
     }
 

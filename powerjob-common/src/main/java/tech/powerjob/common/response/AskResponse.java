@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 
 
 /**
- * Pattens.ask 的响应
+ * Response to Pattens.ask
  *
  * @author tjq
  * @since 2020/3/18
@@ -21,13 +21,13 @@ public class AskResponse implements PowerSerializable {
     private boolean success;
 
     /*
-    - 使用 Object 会报错：java.lang.ClassCastException: scala.collection.immutable.HashMap cannot be cast to XXX，只能自己序列化反序列化了
-    - 嵌套类型（比如 Map<String, B>），如果B也是个复杂对象，那么反序列化后B的类型为 LinkedHashMap... 处理比较麻烦（转成JSON再转回来）
-    - 考虑到多语言通讯，data 必须使用 JSON 序列化为字节数组
+    - Using Object will report an error: java.lang.ClassCastException: scala.collection.immutable.HashMap cannot be cast to XXX, you can only serialize and deserialize it yourself
+    - Nested types (such as Map<String, B>), if B is also a complex object, then the type of B after deserialization is LinkedHashMap... It is troublesome to process (convert to JSON and then back)
+    - Considering multilingual communication, data must be serialized as a byte array using JSON
      */
     private byte[] data;
 
-    // 错误信息
+    // error message
     private String message;
 
     public static AskResponse succeed(Object data) {

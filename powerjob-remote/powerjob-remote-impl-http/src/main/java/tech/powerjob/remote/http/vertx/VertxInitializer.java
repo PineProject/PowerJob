@@ -13,7 +13,7 @@ import tech.powerjob.common.PowerJobDKey;
 
 /**
  * VertxInitializer
- * PowerJob 只是将 vertx 作为 toolkit 使用
+ * PowerJob just uses vertx as a toolkit
  *
  * @author tjq
  * @since 2023/1/1
@@ -22,7 +22,7 @@ import tech.powerjob.common.PowerJobDKey;
 public class VertxInitializer {
 
     /**
-     * 默认开启长连接，且 75S 超时
+     * Persistent connection is enabled by default, and 75S timeout
      */
     private static final int DEFAULT_KEEP_ALIVE_TIMEOUT = 75;
 
@@ -47,7 +47,7 @@ public class VertxInitializer {
         return vertx.createHttpServer(httpServerOptions);
     }
     private static void tryEnableCompression(HttpServerOptions httpServerOptions) {
-        // 非核心组件，不直接依赖类（无 import），加载报错可忽略
+        // Non-core components, not directly dependent on classes (no import), loading errors can be ignored
         try {
             httpServerOptions
                     .addCompressor(io.netty.handler.codec.compression.StandardCompressionOptions.gzip())
@@ -65,7 +65,7 @@ public class VertxInitializer {
                 .setConnectTimeout(CONNECTION_TIMEOUT_MS)
                 .setMaxPoolSize(Math.max(8, Runtime.getRuntime().availableProcessors()) * 2);
 
-        // 长连接
+        // Long connection
         String keepaliveTimeout = System.getProperty(PowerJobDKey.TRANSPORTER_KEEP_ALIVE_TIMEOUT, String.valueOf(DEFAULT_KEEP_ALIVE_TIMEOUT));
         int keepaliveTimeoutInt = Integer.parseInt(keepaliveTimeout);
         if (keepaliveTimeoutInt > 0) {
@@ -74,7 +74,7 @@ public class VertxInitializer {
             httpClientOptions.setKeepAlive(false);
         }
 
-        // 压缩判定
+        // compression decision
         String enableCompressing = System.getProperty(PowerJobDKey.TRANSPORTER_USE_COMPRESSING);
         if (StringUtils.isNotEmpty(enableCompressing)) {
             httpClientOptions.setTryUseCompression(StringUtils.equalsIgnoreCase(enableCompressing, Boolean.TRUE.toString()));

@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 内建的 SpringBean 处理器工厂，用于加载 Spring 管理Bean下的方法（使用PowerJob注解），非核心依赖
+ * Built-in SpringBean processor factory, used to load methods under Spring management beans (using PowerJob annotations), non-core dependencies
  *
  * @author wxp
  * @since 2023/4/06
@@ -55,7 +55,7 @@ public class BuildInSpringMethodProcessorFactory extends AbstractBuildInSpringPr
                     continue;
                 }
                 String name = powerJob.name();
-                //匹配到和页面定义相同的methodName
+                // Match to the same methodName as the page definition
                 if (!name.equals(methodName)) {
                     continue;
                 }

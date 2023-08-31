@@ -3,7 +3,7 @@ package tech.powerjob.worker.core.processor;
 import lombok.Data;
 
 /**
- * Task执行结果
+ * Task execution result
  *
  * @author tjq
  * @since 2020/4/17

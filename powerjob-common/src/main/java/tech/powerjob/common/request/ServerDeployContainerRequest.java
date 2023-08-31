@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Worker部署Container请求
+ * Worker deployment Container request
  *
  * @author tjq
  * @since 2020/5/16
@@ -17,19 +17,19 @@ import lombok.NoArgsConstructor;
 public class ServerDeployContainerRequest implements PowerSerializable {
 
     /**
-     * 容器ID
+     * Container ID
      */
     private Long containerId;
     /**
-     * 容器名称
+     * container name
      */
     private String containerName;
     /**
-     * 文件名（MD5值），用于做版本校验和文件下载
+     * File name (MD5 value), used for version check and file download
      */
     private String version;
     /**
-     * 下载地址
+     * download link
      */
     private String downloadURL;
 }

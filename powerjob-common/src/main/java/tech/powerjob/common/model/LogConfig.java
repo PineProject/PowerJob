@@ -7,7 +7,7 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 
 /**
- * 任务日志配置
+ * Task log configuration
  *
  * @author yhz
  * @since 2022/9/16

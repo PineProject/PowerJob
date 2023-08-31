@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Spring 项目中的 Worker 启动器
- * 能够获取到由 Spring IOC 容器管理的 processor
+ * Worker starters in Spring projects
+ * Ability to obtain processors managed by the Spring IOC container
  *
  * @author tjq
  * @since 2023/1/20
@@ -25,7 +25,7 @@ import java.util.Optional;
 public class PowerJobSpringWorker implements ApplicationContextAware, InitializingBean, DisposableBean {
 
     /**
-     * 组合优于继承，持有 PowerJobWorker，内部重新设置 ProcessorFactory 更优雅
+     * Composition is better than inheritance, holding PowerJobWorker, internally resetting ProcessorFactory is more elegant
      */
     private PowerJobWorker powerJobWorker;
     private final PowerJobWorkerConfig config;

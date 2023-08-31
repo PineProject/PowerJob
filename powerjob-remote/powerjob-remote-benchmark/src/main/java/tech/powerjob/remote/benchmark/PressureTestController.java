@@ -13,13 +13,12 @@ import tech.powerjob.remote.framework.base.HandlerLocation;
 import tech.powerjob.remote.framework.base.URL;
 
 import javax.annotation.Resource;
-
 import java.util.concurrent.CompletionStage;
 
 import static tech.powerjob.remote.benchmark.EngineService.*;
 
 /**
- * 压测测试入口
+ * Pressure test entry
  *
  * @author tjq
  * @since 2023/1/7

@@ -63,9 +63,9 @@ public class VertxTransporter implements Transporter {
                 .setHost(host)
                 .setPort(port)
                 .setURI(path);
-        // 获取远程服务器的HTTP连接
+        // Get the HTTP connection of the remote server
         Future<HttpClientRequest> httpClientRequestFuture = httpClient.request(requestOptions);
-        // 转换 -> 发送请求获取响应
+        // Transformation -> send request get response
         Future<HttpClientResponse> responseFuture = httpClientRequestFuture.compose(httpClientRequest ->
             httpClientRequest
                 .putHeader(HttpHeaderNames.CONTENT_TYPE, HttpHeaderValues.APPLICATION_JSON)
@@ -75,7 +75,7 @@ public class VertxTransporter implements Transporter {
             // throw exception
             final int statusCode = httpClientResponse.statusCode();
             if (statusCode != HttpResponseStatus.OK.code()) {
-                // CompletableFuture.get() 时会传递抛出该异常
+                // CompletableFuture.get() The exception is thrown when the
                 throw new RemotingException(String.format("request [host:%s,port:%s,url:%s] failed, status: %d, msg: %s",
                        host, port, path, statusCode, httpClientResponse.statusMessage()
                         ));

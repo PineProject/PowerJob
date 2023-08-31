@@ -1,12 +1,12 @@
 package tech.powerjob.samples.tester;
 
+import org.springframework.stereotype.Component;
 import tech.powerjob.worker.core.processor.ProcessResult;
 import tech.powerjob.worker.core.processor.TaskContext;
 import tech.powerjob.worker.core.processor.sdk.BasicProcessor;
-import org.springframework.stereotype.Component;
 
 /**
- * 测试用户反馈的无法停止实例的问题 (可中断)
+ * Test the problem reported by users that the instance cannot be stopped (can be interrupted)
  * https://github.com/PowerJob/PowerJob/issues/37
  *
  * @author tjq

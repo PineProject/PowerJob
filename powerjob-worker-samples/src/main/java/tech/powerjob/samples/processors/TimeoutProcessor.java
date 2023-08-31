@@ -1,13 +1,13 @@
 package tech.powerjob.samples.processors;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import tech.powerjob.worker.core.processor.ProcessResult;
 import tech.powerjob.worker.core.processor.TaskContext;
 import tech.powerjob.worker.core.processor.sdk.BasicProcessor;
-import org.springframework.stereotype.Component;
 
 /**
- * 测试超时任务（可中断）
+ * Test timeout task (interruptible)
  *
  * @author tjq
  * @since 2020/4/20

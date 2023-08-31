@@ -35,7 +35,7 @@ public abstract class AbstractBuildInSpringProcessorFactory implements Processor
     @SuppressWarnings("unchecked")
     protected static <T> T getBean(String className, ApplicationContext ctx) throws Exception {
 
-        // 0. 尝试直接用 Bean 名称加载
+        // 0. Try loading directly with the Bean name
         try {
             final Object bean = ctx.getBean(className);
             if (bean != null) {
@@ -44,15 +44,15 @@ public abstract class AbstractBuildInSpringProcessorFactory implements Processor
         } catch (Exception ignore) {
         }
 
-        // 1. ClassLoader 存在，则直接使用 clz 加载
+        // 1. ClassLoader If it exists, use clz to load it directly
         ClassLoader classLoader = ctx.getClassLoader();
         if (classLoader != null) {
             return (T) ctx.getBean(classLoader.loadClass(className));
         }
-        // 2. ClassLoader 不存在(系统类加载器不可见)，尝试用类名称小写加载
+        // 2. ClassLoader does not exist (invisible to system class loader), try to load with lowercase class name
         String[] split = className.split("\\.");
         String beanName = split[split.length - 1];
-        // 小写转大写
+        // lowercase to uppercase
         char[] cs = beanName.toCharArray();
         cs[0] += 32;
         String beanName0 = String.valueOf(cs);

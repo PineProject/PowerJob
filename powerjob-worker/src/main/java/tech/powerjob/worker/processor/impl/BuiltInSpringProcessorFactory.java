@@ -13,7 +13,7 @@ import tech.powerjob.worker.extension.processor.ProcessorFactory;
 import java.util.Set;
 
 /**
- * 内建的 SpringBean 处理器工厂，用于加载 Spring 相关的Bean，非核心依赖
+ * Built-in SpringBean processor factory for loading Spring-related beans, non-core dependencies
  *
  * @author tjq
  * @since 2023/1/17
@@ -36,7 +36,7 @@ public class BuiltInSpringProcessorFactory extends AbstractBuildInSpringProcesso
                 return null;
             }
             String processorInfo = processorDefinition.getProcessorInfo();
-            //用于区分方法级别的参数
+            //Parameters used to distinguish method levels
             if (processorInfo.contains("#")) {
                 return null;
             }

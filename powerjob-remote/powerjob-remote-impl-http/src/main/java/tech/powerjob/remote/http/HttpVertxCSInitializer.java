@@ -33,10 +33,10 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * HttpCSInitializer
- * 在纠结了1晚上后，最终决定选用 vertx 作为 http 底层，而不是直接使用 netty，理由如下：
- *  - netty 实现容易，但性能调优方面需要时间成本和实践经验，而 vertx 作为 netty 的"嫡系"框架，对 netty 的封装理论上炉火纯青，性能不成问题
- *  - vertx 唯一的缺点是其作为相对上层的框架，可能存在较为严重的包冲突问题，尤其是对于那些本身跑在 vertx-framework 上的用户
- *      - 不过该问题可以通过更换协议解决，预计后续提供一个基于 netty 和自定义协议的实现
+ * After struggling for one night, I finally decided to use vertx as the bottom layer of http instead of using netty directly. The reasons are as follows:
+ * - Netty is easy to implement, but performance tuning requires time cost and practical experience, and vertx, as the "direct line" framework of netty, is theoretically proficient in encapsulating netty, and performance is not a problem
+ * - The only disadvantage of vertx is that as a relatively upper-level framework, there may be more serious package conflicts, especially for those users who themselves run on vertx-framework
+ * - However, this problem can be solved by replacing the protocol. It is expected to provide an implementation based on netty and a custom protocol in the future
  *
  * @author tjq
  * @since 2022/12/31
@@ -72,7 +72,7 @@ public class HttpVertxCSInitializer implements CSInitializer {
     @SneakyThrows
     public void bindHandlers(List<ActorInfo> actorInfos) {
         Router router = Router.router(vertx);
-        // 处理请求响应
+        // Handle request responses
         router.route().handler(BodyHandler.create());
         actorInfos.forEach(actorInfo -> {
             Optional.ofNullable(actorInfo.getHandlerInfos()).orElse(Collections.emptyList()).forEach(handlerInfo -> {
@@ -89,7 +89,7 @@ public class HttpVertxCSInitializer implements CSInitializer {
             });
         });
 
-        // 启动 vertx http server
+        // start up vertx http server
         final int port = config.getBindAddress().getPort();
         final String host = config.getBindAddress().getHost();
 
@@ -107,7 +107,7 @@ public class HttpVertxCSInitializer implements CSInitializer {
         Method method = handlerInfo.getMethod();
         Optional<Class<?>> powerSerializeClz = RemoteUtils.findPowerSerialize(method.getParameterTypes());
 
-        // 内部框架，严格模式，绑定失败直接报错
+        // Internal framework, strict mode, direct error when binding fails
         if (!powerSerializeClz.isPresent()) {
             throw new PowerJobException("can't find any 'PowerSerialize' object in handler args: " + handlerInfo.getLocation());
         }
@@ -128,7 +128,7 @@ public class HttpVertxCSInitializer implements CSInitializer {
 
                 ctx.end();
             } catch (Throwable t) {
-                // 注意这里是框架实际运行时，日志输出用标准 PowerJob 格式
+                // Note that this is when the framework is actually running, and the log output is in the standard PowerJob format
                 log.error("[PowerJob] invoke Handler[{}] failed!", handlerInfo.getLocation(), t);
                 ctx.fail(HttpResponseStatus.INTERNAL_SERVER_ERROR.code(), t);
             }

@@ -14,7 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import static tech.powerjob.worker.core.tracker.task.heavy.CommonTaskTracker.ROOT_TASK_ID;
 
 /**
- * H2 数据库持久化测试
+ * H2 Database Persistence Test
  *
  * @author tjq
  * @since 2020/3/23

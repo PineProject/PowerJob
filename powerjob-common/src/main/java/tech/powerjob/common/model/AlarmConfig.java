@@ -13,15 +13,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AlarmConfig {
     /**
-     * 触发告警的阈值
+     * Threshold to trigger an alert
      */
     private Integer alertThreshold;
     /**
-     * 统计的窗口长度（s）
+     * Statistical window length (s)
      */
     private Integer statisticWindowLen;
     /**
-     * 沉默时间窗口（s）
+     * Silent time window (s)
      */
     private Integer silenceWindowLen;
 

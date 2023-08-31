@@ -31,7 +31,7 @@ import java.util.Map;
 import java.util.Queue;
 
 /**
- * Processor 执行器
+ * Processor executor
  *
  * @author tjq
  * @author Echo009
@@ -49,7 +49,7 @@ public class HeavyProcessorRunnable implements Runnable {
     private final ProcessorBean processorBean;
     private final OmsLogger omsLogger;
     /**
-     * 重试队列，ProcessorTracker 将会定期重新上报处理结果
+     * Retry queue, ProcessorTracker will periodically re-report processing results
      */
     private final Queue<ProcessorReportTaskStatusReq> statusReportRetryQueue;
     private final WorkerRuntime workerRuntime;
@@ -65,30 +65,30 @@ public class HeavyProcessorRunnable implements Runnable {
         ThreadLocalStore.setTask(task);
         ThreadLocalStore.setRuntimeMeta(workerRuntime);
 
-        // 0. 构造任务上下文
+        // 0. Construct task context
         WorkflowContext workflowContext = constructWorkflowContext();
         TaskContext taskContext = constructTaskContext();
         taskContext.setWorkflowContext(workflowContext);
-        // 1. 上报执行信息
-        reportStatus(TaskStatus.WORKER_PROCESSING, null, null, null);
+        // 1. Report execution information
+        reportStatus(TaskStatus. WORKER_PROCESSING, null, null, null);
 
         ProcessResult processResult;
-        ExecuteType executeType = ExecuteType.valueOf(instanceInfo.getExecuteType());
+        ExecuteType executeType = ExecuteType. valueOf(instanceInfo. getExecuteType());
 
-        // 2. 根任务 & 广播执行 特殊处理
+        // 2. Root task & broadcast execution special processing
         if (TaskConstant.ROOT_TASK_NAME.equals(task.getTaskName()) && executeType == ExecuteType.BROADCAST) {
-            // 广播执行：先选本机执行 preProcess，完成后 TaskTracker 再为所有 Worker 生成子 Task
+            // Broadcast execution: first select the local machine to execute preProcess, and after completion, TaskTracker generates sub-Tasks for all Workers
             handleBroadcastRootTask(instanceId, taskContext);
             return;
         }
 
-        // 3. 最终任务特殊处理（一定和 TaskTracker 处于相同的机器）
+        // 3. Special processing for the final task (must be on the same machine as TaskTracker)
         if (TaskConstant.LAST_TASK_NAME.equals(task.getTaskName())) {
             handleLastTask(taskId, instanceId, taskContext, executeType);
             return;
         }
 
-        // 4. 正式提交运行
+        // 4. Officially submit and run
         try {
             processResult = processor.process(taskContext);
             if (processResult == null) {
@@ -126,7 +126,7 @@ public class HeavyProcessorRunnable implements Runnable {
     }
 
     /**
-     * 处理最终任务
+     * Handle the final task
      * BROADCAST  => {@link BroadcastProcessor#postProcess}
      * MAP_REDUCE => {@link MapReduceProcessor#reduce}
      */
@@ -172,13 +172,13 @@ public class HeavyProcessorRunnable implements Runnable {
     }
 
     /**
-     * 处理广播执行的根任务
-     * 即执行 {@link BroadcastProcessor#preProcess}，并通知 TaskerTracker 创建广播子任务
+     * Handle the root task for broadcast execution
+     * Execute {@link BroadcastProcessor#preProcess} and notify TaskerTracker to create a broadcast subtask
      */
     private void handleBroadcastRootTask(Long instanceId, TaskContext taskContext) {
         BasicProcessor processor = processorBean.getProcessor();
         ProcessResult processResult;
-        // 广播执行的第一个 task 只执行 preProcess 部分
+        // The first task executed by the broadcast only executes the preProcess part
         if (processor instanceof BroadcastProcessor) {
 
             BroadcastProcessor broadcastProcessor = (BroadcastProcessor) processor;
@@ -192,17 +192,17 @@ public class HeavyProcessorRunnable implements Runnable {
         } else {
             processResult = new ProcessResult(true, "NO_PREPOST_TASK");
         }
-        // 通知 TaskTracker 创建广播子任务
+        // Notify TaskTracker to create a broadcast subtask
         reportStatus(processResult.isSuccess() ? TaskStatus.WORKER_PROCESS_SUCCESS : TaskStatus.WORKER_PROCESS_FAILED, suit(processResult.getMsg()), ProcessorReportTaskStatusReq.BROADCAST, taskContext.getWorkflowContext().getAppendedContextData());
 
     }
 
     /**
-     * 上报状态给 TaskTracker
+     * Report status to TaskTracker
      *
-     * @param status Task状态
-     * @param result 执行结果，只有结束时才存在
-     * @param cmd    特殊需求，比如广播执行需要创建广播任务
+     * @param status Task status
+     * @param result Execution result, only exists at the end
+     * @param cmd Special requirements, such as broadcast execution needs to create a broadcast task
      */
     private void reportStatus(TaskStatus status, String result, Integer cmd, Map<String, String> appendedWfContext) {
         ProcessorReportTaskStatusReq req = new ProcessorReportTaskStatusReq();
@@ -214,7 +214,7 @@ public class HeavyProcessorRunnable implements Runnable {
         req.setResult(result);
         req.setReportTime(System.currentTimeMillis());
         req.setCmd(cmd);
-        // 检查追加的上下文大小是否超出限制
+        // Checks if appended context size exceeds limit
         if (instanceInfo.getWfInstanceId() !=null && WorkflowContextUtils.isExceededLengthLimit(appendedWfContext, workerRuntime.getWorkerConfig().getMaxAppendedWfContextLength())) {
             log.warn("[ProcessorRunnable-{}]current length of appended workflow context data is greater than {}, this appended workflow context data will be ignore!",instanceInfo.getInstanceId(), workerRuntime.getWorkerConfig().getMaxAppendedWfContextLength());
             // ignore appended workflow context data
@@ -222,11 +222,11 @@ public class HeavyProcessorRunnable implements Runnable {
         }
         req.setAppendedWfContext(appendedWfContext);
 
-        // 最终结束状态要求可靠发送
-        if (TaskStatus.FINISHED_STATUS.contains(status.getValue())) {
-            boolean success = TransportUtils.reliablePtReportTask(req, taskTrackerAddress, workerRuntime);
+        // The final end state requires reliable delivery
+        if (TaskStatus. FINISHED_STATUS. contains(status. getValue())) {
+            boolean success = TransportUtils. reliablePtReportTask(req, taskTrackerAddress, workerRuntime);
             if (!success) {
-                // 插入重试队列，等待重试
+                // Insert into the retry queue, waiting for retry
                 statusReportRetryQueue.add(req);
                 log.warn("[ProcessorRunnable-{}] report task(id={},status={},result={}) failed, will retry later", task.getInstanceId(), task.getTaskId(), status, result);
             }
@@ -238,7 +238,8 @@ public class HeavyProcessorRunnable implements Runnable {
     @Override
     @SuppressWarnings("squid:S2142")
     public void run() {
-        // 切换线程上下文类加载器（否则用的是 Worker 类加载器，不存在容器类，在序列化/反序列化时会报 ClassNotFoundException）
+        // Switch the thread context class loader (otherwise the Worker class loader is used, there is no container class,
+        // and ClassNotFoundException will be reported during serialization/deserialization)
         Thread.currentThread().setContextClassLoader(processorBean.getClassLoader());
         try {
             innerRun();
@@ -253,7 +254,7 @@ public class HeavyProcessorRunnable implements Runnable {
     }
 
     /**
-     * 裁剪返回结果到合适的大小
+     * Crop the returned result to a suitable size
      */
     private String suit(String result) {
 

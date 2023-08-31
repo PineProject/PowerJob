@@ -13,7 +13,7 @@ import tech.powerjob.worker.pojo.request.TaskTrackerStartTaskReq;
 import org.junit.jupiter.api.Test;
 
 /**
- * 空闲测试
+ * idle test
  *
  * @author tjq
  * @since 2020/6/17

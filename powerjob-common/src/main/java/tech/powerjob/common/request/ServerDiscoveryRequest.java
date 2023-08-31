@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * 服务发现请求
+ * service discovery request
  *
  * @author tjq
  * @since 2023/1/21
@@ -30,7 +30,7 @@ public class ServerDiscoveryRequest implements Serializable {
 
     public Map<String, Object> toMap() {
         Map<String, Object> ret = new HashMap<>();
-        // testMode 下 appId 可能为空，此处不判断会导致 testMode 无法启动 #580
+        // testMode The next appId may be empty, if it is not judged here, it will cause testMode to fail to start #580
         if (appId != null) {
             ret.put("appId", appId);
         }

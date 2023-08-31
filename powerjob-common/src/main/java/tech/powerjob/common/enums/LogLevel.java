@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.util.Objects;
 
 /**
- * 日志级别
+ * log level
  *
  * @author tjq
  * @since 12/20/20
